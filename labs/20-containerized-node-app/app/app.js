@@ -23,7 +23,7 @@ export async function buildApp() {
 
   // Get all quotes endpoint
   app.get("/", async (_req, reply) => {
-    const result = await app.pg.query('SELECT autor, text FROM quotes ORDER BY created_at DESC')
+    const result = await app.pg.query('SELECT author, text FROM quotes ORDER BY created_at DESC')
     const quotes = result.rows;
     return reply.view("index.hbs", { quotes });
   });
