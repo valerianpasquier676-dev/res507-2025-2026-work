@@ -9,5 +9,6 @@ INSERT INTO quotes(author, text)
 VALUES
   ('grace', 'Make it work, then make it right, then make it fast.'),
   ('linus', 'Talk is cheap. Show me the code.'),
-  ('devops', 'If it hurts, do it more often.')
+  ('devops', 'If it hurts, do it more often.'),
+  ('test','on adore tous les TPs de monsieur CODY')
 ON CONFLICT DO NOTHING;
