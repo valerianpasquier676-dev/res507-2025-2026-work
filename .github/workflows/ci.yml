@@ -60,3 +60,33 @@ jobs:
       - name: Stop container
         if: always()
         run: docker rm -f quote-app || true
+
+  # Job 3 (extension) : application + vraie base PostgreSQL.
+  # On verifie qu'une citation de depart s'affiche, qu'on peut en ajouter une
+  # et qu'on la retrouve ensuite.
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Start application and database
+        working-directory: labs/20-containerized-node-app
+        run: docker compose -f docker/compose.ci.yaml up -d --build
+
+      - name: Check quotes with the database
+        working-directory: labs/20-containerized-node-app
+        run: ./tests/check-database.sh
+
+      - name: Show application and database logs
+        if: failure()
+        working-directory: labs/20-containerized-node-app
+        run: |
+          docker compose -f docker/compose.ci.yaml ps -a
+          docker compose -f docker/compose.ci.yaml logs
+
+      - name: Stop services
+        if: always()
+        working-directory: labs/20-containerized-node-app
+        run: docker compose -f docker/compose.ci.yaml down -v
