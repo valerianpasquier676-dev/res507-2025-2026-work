@@ -61,9 +61,7 @@ jobs:
         if: always()
         run: docker rm -f quote-app || true
 
-  # Job 3 (extension) : application + vraie base PostgreSQL.
-  # On verifie qu'une citation de depart s'affiche, qu'on peut en ajouter une
-  # et qu'on la retrouve ensuite.
+  
   database:
     runs-on: ubuntu-latest
     timeout-minutes: 10
